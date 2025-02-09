@@ -1,0 +1,16 @@
+<h1>Список товаров</h1>
+<ul>
+{% for product in products %}
+    <li>
+        <strong>Название:</strong> {{ product.name }} <br>
+        <strong>Цена:</strong> {{ product.price }} руб. <br>
+        <strong>Доступно:</strong> {{ 'Да' if product.is_available else 'Нет' }} <br>
+        <strong>Категории:</strong>
+        <ul>
+        {% for category in product.categories %}
+            <li>{{ category }}</li>  <!-- Вывод категорий товара -->
+        {% endfor %}
+        </ul>
+    </li>
+{% endfor %}
+</ul>
