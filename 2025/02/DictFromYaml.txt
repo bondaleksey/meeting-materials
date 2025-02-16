@@ -1,0 +1,13 @@
+name: Complex Application
+version: 2.1.0
+enabled: True
+debug: False
+database: {'primary': {'host': 'db.example.com', 'port': 5432, 'credentials': {'username': 'admin', 'password': 'secret123'}, 'pool': {'max_connections': 100, 'timeout': 30.5}}, 'replicas': [{'host': 'replica1.example.com', 'port': 5432, 'weight': 0.7}, {'host': 'replica2.example.com', 'port': 5432, 'weight': 0.3}]}
+cache: {'redis': [{'host': 'redis1.example.com', 'port': 6379, 'role': 'master'}, {'host': 'redis2.example.com', 'port': 6379, 'role': 'slave'}], 'memcached': {'host': 'memcached.example.com', 'port': 11211}}
+api: {'endpoints': {'users': '/api/v1/users', 'orders': '/api/v1/orders'}, 'rate_limiting': {'enabled': True, 'rates': [{'interval': '1s', 'limit': 10}, {'interval': '1m', 'limit': 100}]}, 'authentication': {'methods': ['jwt', 'oauth2'], 'jwt_secret': b'abcdefghijklmnop', 'oauth2_providers': {'google': {'client_id': 'google-client-id', 'client_secret': 'google-client-secret'}, 'facebook': {'client_id': 'facebook-client-id', 'client_secret': 'facebook-client-secret'}}}}
+logging: {'level': 'INFO', 'handlers': {'file': {'path': '/var/log/app.log', 'max_size': '100MB', 'backups': 5}, 'sentry': {'dsn': 'https://sentry.example.com', 'environment': 'production'}}, 'format': 'time: "%(asctime)s"\nlevel: "%(levelname)s"\nmessage: "%(message)s"\n'}
+queues: {'rabbitmq': {'hosts': ['rabbit1.example.com', 'rabbit2.example.com'], 'vhost': '/production', 'exchanges': {'default': {'name': 'amq.direct', 'type': 'direct'}, 'delayed': {'name': 'delayed.exchange', 'type': 'x-delayed-message'}}, 'queues': [{'name': 'notifications', 'durable': True, 'arguments': {'x-max-length': 10000}}, {'name': 'emails', 'durable': True, 'arguments': {'x-message-ttl': 3600000}}]}}
+monitoring: {'metrics': {'prometheus': {'enabled': True, 'port': 9090, 'path': '/metrics'}}, 'health_checks': {'enabled': True, 'endpoints': [{'name': 'database', 'url': '/health/db', 'interval': '30s'}, {'name': 'redis', 'url': '/health/redis', 'interval': '15s'}]}}
+environment_variables: {'production': {'API_KEY': 'prod-api-key', 'DEBUG': False}, 'staging': {'API_KEY': 'stage-api-key', 'DEBUG': True}}
+security: {'ssl': {'enabled': True, 'cert_path': '/etc/ssl/cert.pem', 'key_path': '/etc/ssl/key.pem'}, 'cors': {'allowed_origins': ['https://example.com', 'https://api.example.com'], 'allowed_methods': ['GET', 'POST', 'PUT', 'DELETE']}, 'ip_whitelist': ['192.168.1.0/24', '10.0.0.0/8']}
+schedules: {'cron': [{'name': 'backup_database', 'schedule': '0 0 * * *', 'command': '/scripts/backup.sh'}, {'name': 'clear_cache', 'schedule': '0 */4 * * *', 'command': '/scripts/clear-cache.sh'}]}
